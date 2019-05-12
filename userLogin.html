@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户管理</title>
+  
+</head>
+
+<script src="D:\learning\jq\jquery-easyui-1.7.6\jquery.min.js"></script>
+
+<script>
+  function submitqq(){
+    $.ajax({
+      url:"http://localhost:8080/user/login",
+      data:$("#formLogin").serialize(),
+      success:function(data){
+       var code = data.code;
+       if (code == "200"){
+        window.location="userManage.html";
+       }else{
+         var idSelect = "#"+code;
+         $("span").css("display","none"); //先把之前的错误提示去掉
+         $(idSelect).css("display","block")   // 拼接成'#501'
+       }
+      }
+     
+
+    })
+
+  }
+    
+  
+
+
+</script>
+
+<style>
+input[type=button] {
+  width: 500;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  float: center;
+  position: absolute;width:400px;height:200px;left:50%;top:50%; 
+  margin-left:-200px;margin-top:-100px;border:1px solid #00F;
+  
+}
+</style>
+
+<body>
+  <div style=text-align:center>
+  <form id="formLogin">
+登录名<input type="text" name="loginName" placeholder="请输入登录名" id="loginName"/>
+<span style=color:red;display:none id="500">
+    登录名不能为空
+</span>
+<span style=color:red;display:none id="502" >
+    登录名不正确
+</span> <br><br>
+密&nbsp;&nbsp;&nbsp;码<input type="text" name="pwd" placeholder="请输入密码" id="pwd"/>
+<span style=color:red;display:none id="501">
+    密码不能为空
+</span>
+<span style=color:red;display:none id="503" >
+    密码错误
+</span><br><br>
+<input type="button" value="提交" onclick="javascript:submitqq();"/>
+
+  </form>
+</div>
+</body>
+
+
+</html>

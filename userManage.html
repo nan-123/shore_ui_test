@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户管理</title>
+  
+</head>
+
+<script src="D:\learning\jq\jquery-easyui-1.7.6\jquery.min.js"></script>
+
+<script>
+  /**
+  url管理
+  */
+  const url = "http://localhost:8080/user/";
+  const delMethod = url + "delUser?id="
+  const addMethod = url + "addUser"
+  const getMethod = url + "getUserById?id="
+  const updateMethod = url + "updateUser"
+  const searchMethod = url + "getUser"
+  const checkMethod= url + "checkLoginName"
+
+  var userCount = 0;
+
+  $(document).ready(function(){
+    serchUser();
+  })
+   
+
+  function serchUser(pageNum){
+     if(pageNum== null ){  // 判断有没有当前页参数，没有的话就默认是第一页
+      pageNum = 1;
+     }
+    var pageSize = $("#pageSize2").val();  // 把当前选中的显示条数赋值到 <input type="hidden" id="pageSize" name="pageSize" />
+     $("#pageSize").val(pageSize);
+     $("#pageNum").val(pageNum);// 把当前页赋值给<input type="hidden" id="pageNum" name="pageNum" />
+    $.ajax({
+      url:searchMethod,
+      data:$("#serchUser").serialize(),
+      success:function(data){ 
+        $("#table1 tr:gt(0)").remove()
+       var arr = data.users;
+       userCount  = data.count; //先后端取值
+        $("#count").val(count); //再赋值
+        for(i=0; i<arr.length; i++ ){
+        var sex = arr[i].sex == "1"? "男":"女";
+        
+         $("#table1").append(
+           "<tr><td>"+arr[i].name+"</td>"
+            +"<td>"+arr[i].age+"</td>"
+            +"<td>"+arr[i].loginName+"</td>"
+            +"<td>"+arr[i].dept+"</td>"
+            +"<td>"+sex+"</td>"
+            +"<td>"+arr[i].mail+"</td>"
+            +"<td><input type='button' value='删除' onclick='javascript:del("+arr[i].id+");'/>"
+            +"<input type='button' value='编辑' onclick='javascript:editUser("+arr[i].id+");'/></td>"
+            +"</tr>"
+         )
+        }
+        var maxppage = getMaxPage();
+        $("#pageInfo").text("共"+pageNum+ "/"+ maxppage + "页");
+
+      }
+    })
+
+   }
+  
+  function saveOrUpdate(){
+    var flag = checkLogin1();
+
+     if (flag){
+    var id = $("#id").val();
+    var methodUrl = id == "" ? addMethod:updateMethod;
+    $.ajax({
+    url:methodUrl,
+    data:$("#editForm").serialize(),
+    success:function(result){
+    location.reload();
+    }
+  })
+}
+  }
+
+  function checkLogin(){
+    var loginName = $("#loginName").val()
+     $("#loginSpan").css("display","none");
+    $.ajax({
+      url:checkMethod,
+      data:{ loginName:loginName},
+      success:function(data){
+        var isExist = data.isExist;
+        if(isExist == "1"){
+          $("#loginName").after("<span id='loginSpan' style=color:red>登录名已存在</span>")
+        }
+      }
+  
+  })
+  }
+
+   function checkLogin1(){
+     $("#editForm span").css("display","none");
+     var flag = true;
+    var name = $("#name").val();
+       var namereg = /\w{4,8}/ ;
+       flag = namereg.test(name);
+      if (!flag){
+        $("#name").after("<span style=color:red>请输入4-8位的姓名</span>")
+        return flag;
+      }
+      var age = $("#age").val();
+       var agereg = /\d{1,2}/ ;
+       flag = agereg.test(age);
+      if (!flag){
+        $("#age").after("<span style=color:red>请输入正确年龄</span>")
+        return flag;
+      }
+      var loginName = $("#loginName").val();
+       var loginNamereg = /\w{4,16}/ ;
+       flag = loginNamereg.test(loginName);
+      if (!flag){
+        $("#loginName").after("<span style=color:red>请输入4-16位登录名</span>")
+        return flag;
+      }
+      
+      var pwd = $("#pwd").val();
+       var pwdreg = /\d{4,16}/ ;
+       flag = pwdreg.test(pwd);
+      if (!flag){
+        $("#pwd").after("<span style=color:red>请输入4-16位数字密码</span>")
+        return flag;
+      }
+      var id = $("#id").val();
+       if ( id == null ){
+        var pwd1 = $("#pwd1").val();
+      if( pwd != pwd1 ){
+        flag = false;
+        $("#pwd1").after("<span style=color:red>输入密码不一致</span>")
+        return flag;
+      }
+       }
+      
+
+      var dept = $("#dept").val();
+       var deptreg = /\S{1,}/;
+       flag = deptreg.test(dept);
+      if (!flag){
+        $("#dept").after("<span style=color:red>请输入部门</span>")
+        return flag;
+      }
+      var mail = $("#mail").val();
+       var mailtreg = /\w{1,16}@\w{1,4}.com/;
+       flag = mailtreg.test(mail);
+      if (!flag){
+        $("#mail").after("<span style=color:red>请输入正确邮箱</span>")
+        return flag;
+      }
+      return flag;
+   }
+   
+
+   function del (id){
+     $.ajax({
+       url:delMethod+id,
+       success:function(date){
+         if(date.del=="0"){
+         location.reload();
+        }
+         else{
+          alert("删除失败");
+         } 
+       }
+     })
+   }
+ 
+  function showAdd(){
+    $("#update1").css("display","block")
+  }
+  
+
+  function editUser(id){
+    $.ajax({
+     url:getMethod +id,
+     success:function(date){
+      var arr = date.user;
+      $("#name").val(arr.name);
+      $("#id").val(arr.id);
+      $("#age").val(arr.age);
+      $("#loginName").val(arr.loginName);
+      $("#pwd").val(arr.pwd);
+      $("#dept").val(arr.dept);
+      $("#sex").val(arr.sex);
+      $("#mail").val(arr.mail);
+     }
+    })
+    $("#update1").css("display","block")
+  }
+  
+  
+   function fistPage( ){
+    serchUser();
+   }
+
+   function lastPage(){
+     var pageNum = $("#pageNum").val();
+     if( pageNum !="1"){
+      pageNum = pageNum-1;
+     }
+     serchUser(pageNum);
+   }
+
+function nextPage(){ // 整体思路：判断当前页是否为最大页数，不是的话当前页数+1，再调用搜索方法
+// 1获取到当前页
+// 获取最大页数：
+   // 1:获取总数
+  // 2：当前需要显示条数
+  // 3:最大页数=总数/条数
+// 判断当前页是否小于最大页数 ---true：当前页+1---false:保持当前页数
+   
+    var pageNum = $("#pageNum").val(); //如果总条数有21条，当前显示20条，应该有2页
+    var pageIndex = parseInt(pageNum);
+    var maxPage = getMaxPage() //往下取整
+     if ( pageIndex < maxPage ){
+      pageIndex = pageIndex + 1;
+     }
+     serchUser(pageIndex);
+}
+
+   function finalPage(){ //管你当前页是多少，直接跳到最大页
+    serchUser(getMaxPage());
+   }
+
+
+   function getMaxPage(){
+   var count =  parseInt(userCount);
+   var pageSize = $("#pageSize").val();
+   var maxPage = Math.ceil(parseInt(count)/ parseInt(pageSize));
+   return maxPage;
+   }
+
+</script>
+<style>
+   tr:nth-child(odd) {
+       background-color:bisque;
+     }
+     tr:nth-child(even) {
+       background-color: skyblue;
+     }
+    th,td {
+      text-align:center;
+    }
+    .modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 固定定位 */
+    z-index: 1; /* 设置在顶层 */
+    left: 0;
+    top: 0;
+    width:100%; 
+    height:100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+/* 弹窗内容 */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+  
+</style>
+
+</head>
+
+
+
+<body>
+  <form id="serchUser">  <!--把这个整体视为搜索条件，包括显示条数和当前页数-->
+    姓  名：<input type="text" name="name" /> 
+    年  龄：<input type="text" name="age" />
+    登录名: <input type="text" name="loginName" /><br>
+    部  门: <input type="text" name="dept" />
+    性  别: <input type="text" name="sex" />
+    邮  箱: <input type="text" name="mail" />
+    <input type="hidden" id="pageSize" name="pageSize" /> <!--需要分页的话就改变这里两个的值，重新把表单提交给后端-->
+    <input type="hidden" id="pageNum" name="pageNum" />
+  </form>
+
+  <br>
+  <br>
+<div style=text-align:center > 
+ <input type="button" value="搜索" onclick="javascript:serchUser();"/>
+ <input type="button" value="新增" onclick="javascript:showAdd();"/>
+ 
+</div><br>
+ <table id="table1" style=text-align:center border="1"  width="600" heigth="100" align="center">
+  <input type="hidden" id="count" name="count" /> <!--放到公共区域，以便读取-->
+   <tr>
+     <th> 姓名 </th>
+     <th> 年龄 </th>
+     <th> 登录名 </th>
+     <th> 部门 </th>
+     <th> 性别 </th>
+     <th> 邮箱 </th>
+     <th> 操作 </th>
+   </tr>
+ </table>
+
+
+
+<div style=text-align:center;display:none class="modal" id="update1" >
+  <div class="modal-content"  >
+<form id="editForm"> 
+        <input type="hidden" id="id" name="id" />
+姓  名：<input type="text" name="name" id="name"/> <br>
+年  龄：<input type="text" name="age" id="age"/><br>
+登录名: <input type="text" name="loginName" id="loginName" onblur="javascript:checkLogin();"/><br>
+密  码：<input type="password" name="pwd" id="pwd"/><br>
+确认密码：<input type="password" name="pwd1" id="pwd1"/><br>
+部  门: <input type="text" name="dept" id="dept"/><br>
+性  别: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="radio" name="sex" id="sex" checked="chekced" value="1"/>男
+<input type="radio" name="sex" id="sex" value="0"/>女<br>
+邮  箱: <input type="text" name="mail" id="mail"/><br>
+<br>
+<input type="button" value="保存" onclick="javascript:saveOrUpdate();"/> <br>
+</form>
+</div>
+</div>
+
+<hr>
+<div style=text-align:center>
+  <span id="pageInfo"></span>
+<select id="pageSize2" onchange="javascript:serchUser();">
+ <option value="5"> 5 </option>
+ <option value="10"> 10 </option>
+ <option value="15"> 15 </option>
+ <option value="20"> 20 </option>
+</select>
+
+&nbsp;&nbsp;<input type="button" value="首页" onclick="javascript:fistPage();"/>
+&nbsp;&nbsp;<input type="button" value="上一页" onclick="javascript:lastPage();"/>
+&nbsp;&nbsp;<input type="button" value="下一页" onclick="javascript:nextPage();"/>
+&nbsp;&nbsp;<input type="button" value="尾页" onclick="javascript:finalPage();"/>
+</div>
+
+</body>
+
+</html>
