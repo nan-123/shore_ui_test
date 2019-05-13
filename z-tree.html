@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="F:/static/lib/bootstrap.min.css"/>
+<link rel="stylesheet" href="F:/static/lib/css/demo.css"/>
+<link rel="stylesheet" href="F:/static/lib/css/metroStyle/metroStyle.css"/>
+
+<script type="text/javascript" src="F:/static/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="F:/static/lib/jquery.ztree.core.min.js"></script>
+<script type="text/javascript" src="F:/static/lib/jquery.ztree.excheck.min.js"></script>
+<script>
+var setting = {
+    view: {
+        selectedMulti: true
+    },
+    check: {
+        enable: true,
+    },
+    data: {
+        simpleData: {
+            enable: true,//是否采用简单数据模式
+            idKey: "id",//树节点ID名称
+            pIdKey: "pid",//父节点ID名称
+            rootPId: -1,//根节点ID
+        }
+    }
+};
+$(function () {
+  //加载后端构建的ZTree树（节点的数据格式已在后端格式化好了）
+  $.ajax({
+      url: 'http://localhost:8080/node/getNodes',
+      type: 'get',
+      dataType: "json",
+      success: (data) => {
+          console.log(data);
+          $.fn.zTree.init($("#tree"), setting, data);//初始化树节点时，添加同步获取的数据
+      },
+      error: (data) => {
+          alert(data.message);
+      }
+  });
+});
+
+</script>
+<title>index</title>
+</head>
+<body>
+   <div class="zTreeDemoBackground">
+  <ul id="tree" class="ztree"></ul>
+</div>
+</body>
+</html>
