@@ -47,9 +47,14 @@
     }
     return true;
   }
+
+ function downloadTemp(){
+     location.href = "http://localhost:8080/uploadExcel/excelOut";
+ }
 </script>
 <body>
 <input type="file" id="upfile"><br>
-<input type="button" value="导入"  onclick="submit()">
+<input type="button" value="导入"  onclick="submit()"><br>
+<input type="button" value="模板下载"  onclick="downloadTemp()"><br>
 </body>
 </html>
