@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>page分页测试</title>
+  <link rel="stylesheet" type="text/css" href="static/page_jquery/css/zxf_page.css"/>
+  <script src="static/page_jquery/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="static/page_jquery/js/zxf_page.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<script>
+  $(function(){
+    $(".zxf_pagediv").createPage({
+    pageNum: 50,//总页码
+    current: 30,//当前页
+    shownum: 10,
+    backfun: function(e) {
+      console.log(e);//回调
+    }
+  });
+  })
+ 
+</script>
+<body>
+<div class="zxf_pagediv"></div>
+</body>
+</html>
