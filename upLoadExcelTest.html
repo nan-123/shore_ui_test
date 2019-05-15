@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>page分页测试</title>
+  <link rel="stylesheet" type="text/css" href="static/page_jquery/css/zxf_page.css"/>
+  <script src="static/page_jquery/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="static/page_jquery/js/zxf_page.js" type="text/javascript" charset="utf-8"></script>
+  <script src="static/jquery-easyui-1.7.6/jquery.form.js"></script>
+</head>
+
+<script>
+  function submit() {
+    if(checkData()){
+      var formData = new FormData();
+      var file = document.getElementById("upfile").files[0];
+      formData.append("upfile", file);
+      $.ajax({
+        url:"http://localhost:8080/uploadExcel/ajaxUpload",
+        type:"POST",
+        data:formData,
+        processData : false,
+        contentType : false,
+        dataType : 'json',
+        async : false,
+        success : function (result) {
+          if (result.upload == "0"){
+            alert("文件上传成功")
+            $("#upfile").val("");
+          } else {
+            alert("文件上传失败")
+          }
+          location.reload();
+        }
+      })
+    }
+  }
+
+  //JS校验form表单信息
+  function checkData(){
+    var fileDir = $("#upfile").val();
+    var suffix = fileDir.substr(fileDir.lastIndexOf("."));
+    if("" == fileDir){
+      alert("选择需要导入的Excel文件！");
+      return false;
+    }
+    if(".xls" != suffix && ".xlsx" != suffix ){
+      alert("选择Excel格式的文件导入！");
+      return false;
+    }
+    return true;
+  }
+</script>
+<body>
+<input type="file" id="upfile"><br>
+<input type="button" value="导入"  onclick="submit()">
+</body>
+</html>
