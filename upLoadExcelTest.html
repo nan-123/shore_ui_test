@@ -51,10 +51,15 @@
  function downloadTemp(){
      location.href = "http://localhost:8080/uploadExcel/excelOut";
  }
+
+  function downloadUser(){
+    location.href = "http://localhost:8080/uploadExcel/export";
+  }
 </script>
 <body>
 <input type="file" id="upfile"><br>
 <input type="button" value="导入"  onclick="submit()"><br>
 <input type="button" value="模板下载"  onclick="downloadTemp()"><br>
+<input type="button" value="用户下载"  onclick="downloadUser()"><br>
 </body>
 </html>
