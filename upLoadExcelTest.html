@@ -12,7 +12,7 @@
   function submit() {
     if(checkData()){
       var formData = new FormData();
-      var file = document.getElementById("upfile").files[0];
+      var file = document.getElementById("upfile").files[0];  //原生js获取文件数组，没法用jq
       formData.append("upfile", file);
       $.ajax({
         url:"http://localhost:8080/uploadExcel/ajaxUpload",
@@ -23,7 +23,7 @@
         success : function (result) {
           if (result.upload == "0"){
             alert("文件上传成功")
-            $("#upfile").val("");
+            $("#upfile").val(""); // 这个是input 清空原来的 value
           } else {
             alert("文件上传失败")
           }
@@ -33,9 +33,10 @@
     }
   }
 
-  //JS校验form表单信息
+  //JS校验input表单信息
   function checkData(){
-    var fileDir = $("#upfile").val();
+    var fileDir = $("#upfile").val(); //获取文件名
+    //11.txt            ===> .txt              2               
     var suffix = fileDir.substr(fileDir.lastIndexOf("."));
     if("" == fileDir){
       alert("选择需要导入的Excel文件！");
@@ -57,9 +58,8 @@
   }
 </script>
 <body>
-<input type="file" id="upfile"><br>
-<input type="button" value="导入"  onclick="submit()"><br>
+导入用户<input type="file" id="upfile" onchange="submit()"><br>
 <input type="button" value="模板下载"  onclick="downloadTemp()"><br>
-<input type="button" value="用户下载"  onclick="downloadUser()"><br>
+<input type="button" value="导出"  onclick="downloadUser()"><br>
 </body>
 </html>

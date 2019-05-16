@@ -239,6 +239,39 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
    return maxPage;
    }
 
+   function inputFile(){
+    var formData = new FormData();
+    var file = document.getElementById("file").files[0];
+    formData.append("upfile",file)
+    $.ajax({
+       url:"http://localhost:8080/uploadExcel/ajaxUpload",
+       type:"POST",
+       data:formData,
+       contentType:false,
+       processData:false,
+       success:function (result){
+          if(result.upload=="0"){
+            alert("文件上传成功");
+            $("#file").val("")  //把input清零
+          }
+          else{
+             alert("文件上传失败")
+          }
+          location.reload();
+       }
+    })
+  } 
+ 
+  function downloadFile(){
+     location.href= "http://localhost:8080/uploadExcel/excelOut";
+  }
+
+  function exportFile(){
+   location.href="http://localhost:8080/uploadExcel/export";
+  }
+
+
+
 </script>
 <style>
    tr:nth-child(odd) {
@@ -295,6 +328,10 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
 <div style=text-align:center > 
  <input type="button" value="搜索" onclick="javascript:serchUser();"/>
  <input type="button" value="新增" onclick="javascript:showAdd();"/>
+ <input type="button" value="模板下载" id="download" onclick="javascript:downloadFile();"/>
+ <input type="file" id="file" onchange="inputFile();"/>
+ <input type="button" value="导出" id="export" onclick="javascript:exportFile();"/>
+
  
 </div><br>
  <table id="table1" style=text-align:center border="1"  width="600" heigth="100" align="center">
