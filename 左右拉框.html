@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<script src="D:\learning\jq\jquery-easyui-1.7.6\jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#add").click(function(){
+      if(!$("#select1 option").is(":selected")){
+        alert("请选择移动的选项")
+      }
+      else{
+        $("#select1 option:selected").appendTo("#select2")
+      }
+    })
+    
+    $("#remove").click(function(){
+      if(!$("#select2 option").is(":selected")){
+        alert("请选择移动的选项")
+      }
+      else{
+        $("#select2 option:selected").appendTo("#select1")
+      }
+    })
+
+    $("#addAll").click(function(){
+        $("#select1 option[disabled!=disabled]").appendTo("#select2")
+      })
+
+      $("#removeAll").click(function(){
+        $("#select2 option").appendTo("#select1")
+    })
+    
+    $("#select1").dblclick(function(){
+      $("#select1 option:selected").appendTo("#select2")
+    })
+
+    $("#select2").dblclick(function(){
+      $("#select2 option:selected").appendTo("#select1")
+    })
+  })
+
+
+  
+
+</script>
+
+<style>
+      .select {
+        width: 600px;
+        height: 220px;
+        margin: 100px auto;
+      }
+      
+      .select div {
+        float: left;
+      }
+      
+      .select .selectItem {
+        padding: 5px 20px;
+      }
+      
+      .select .selectItem select {
+        width: 150px;
+        height: 200px;
+        border: 1px #eee solid;
+        padding: 4px;
+        font-size: 14px;
+      }
+      
+      .btnItem p {
+        margin-top: 16px;
+      }
+      
+      .btnItem p span {
+        display: block;
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 14px;
+        border: 1px solid #EEEEEE;
+        line-height: 30px;
+        font-size: 20px;
+      }
+    </style>
+  
+  <body>
+    <div>
+      <div class="select">
+        <div class="selectItem">
+          <select multiple="multiple" id="select1">
+            <option value="选项1">选项1</option>
+            <option value="选项2">选项2</option>
+            <option value="选项3">选项3</option>
+            <option value="选项4" disabled="disabled">选项4</option>
+            <option value="选项5">选项5</option>
+            <option value="选项6">选项6</option>
+            <option value="选项7">选项7</option>
+            <option value="选项8">选项8</option>
+            <option value="选项9">选项9</option>
+            <option value="选项10">选项10</option>
+            <option value="选项11">选项11</option>
+            <option value="选项12">选项12</option>
+            <option value="选项13">选项13</option>
+            <option value="选项14">选项14</option>
+            <option value="选项15">选项15</option>
+            <option value="选项16">选项16</option>
+          </select>
+        </div>
+        <div class="btnItem">
+          <p><span id="add">></span></p>
+          <p><span id="remove"><</span></p>
+          <p><span id="addAll">>></span></p>
+          <p><span id="removeAll"><<</span></p>
+        </div>
+        <div class="selectItem">
+          <select multiple="multiple" id="select2"></select>
+        </div>
+      </div>
+    </div>
+  </body>
+   
+  </html>

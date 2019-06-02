@@ -21,6 +21,7 @@
   const updateMethod = url + "updateUser"
   const searchMethod = url + "getUser"
   const checkMethod= url + "checkLoginName"
+  const delAllMethod= url + "delAll"
 
   var userCount = 0;
 
@@ -48,7 +49,9 @@
         var sex = arr[i].sex == "1"? "男":"女";
         
          $("#table1").append(
-           "<tr><td>"+arr[i].name+"</td>"
+           "<tr>"
+            +"<td><input type='checkbox' class='ck'  value='"+arr[i].id+"'/></td>"
+            +"<td>"+arr[i].name+"</td>"
             +"<td>"+arr[i].age+"</td>"
             +"<td>"+arr[i].loginName+"</td>"
             +"<td>"+arr[i].dept+"</td>"
@@ -242,7 +245,7 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
    function inputFile(){
     if(checkData()){
     var formData = new FormData();
-    var file = document.getElementById("file").files[0];
+    var file = document.getElementById("upfile").files[0];
     formData.append("upfile",file)
     $.ajax({
        url:"http://localhost:8080/uploadExcel/ajaxUpload",
@@ -287,6 +290,57 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
     }
     return true;
   }
+   
+   function checkedUser(){
+     // 1 获取id="checkedUser"的状态
+     // 2 获取下面所有的input元素
+     // 3 把下面所有元素的状态=id="checkedUser"的状态
+     var checkedUser = $("#checkedUser").is(':checked'); // is(':checked')是获取复选框的状态
+       $(".ck").each(function () {
+          this.checked = checkedUser;
+      });
+   }
+
+  //  function allDelUser(){
+  //     // 1 获取下面所有的input元素
+  //     $(".ck").each(function(){
+  //       if(this.checked == true ){
+  //         del(this.value)
+  //       }
+  //     })
+  //  }
+
+  function allDelUser(){
+    var ck = $("input:checked[class='ck']") // 获取当前选中的复选框
+    //  if( ck.length == 0 ){
+    //    alert("请选择,然后进行删除");
+    //    return ;
+    //  }
+    //  var conf = confirm("确认删除!")
+    //  if(!conf){
+    //    return;
+    //  }  
+     var arr =[] //用来装id的空容器 [] 定义出来的数组会自动适应数据长度
+     for (i=0; i<ck.length;i++ ){ // 循环是为了把id一个一个的放进数组里面来
+      arr.push(ck[i].value)   // 假如第一次循环 ck[0].value = 1558450292598
+     }
+     $.ajax({
+       url:delAllMethod,
+       traditional:true,
+       type:"post",
+       data:{ids:arr},
+       success:function (data) {
+              if (data.delAll == "0"){
+                  alert("删除成功")
+              } else {
+                  alert("删除失败")
+              }
+              location.reload()
+          }
+     })
+
+  }
+
 
 
 </script>
@@ -346,14 +400,16 @@ function nextPage(){ // 整体思路：判断当前页是否为最大页数，�
  <input type="button" value="搜索" onclick="javascript:serchUser();"/>
  <input type="button" value="新增" onclick="javascript:showAdd();"/>
  <input type="button" value="模板下载" id="download" onclick="javascript:downloadFile();"/>
- <input type="file" id="file" onchange="inputFile();"/>
+ <input type="file" id="upfile" onchange="inputFile();"/>
  <input type="button" value="导出" id="export" onclick="javascript:exportFile();"/>
+ <input type="button" value="批量删除" id="allDel" onclick="javascript:allDelUser();"/>
 
  
 </div><br>
  <table id="table1" style=text-align:center border="1"  width="600" heigth="100" align="center">
   <input type="hidden" id="count" name="count" /> <!--放到公共区域，以便读取-->
    <tr>
+     <th> <input type="checkbox" id="checkedUser" onclick="javascript:checkedUser();"/> </th>
      <th> 姓名 </th>
      <th> 年龄 </th>
      <th> 登录名 </th>

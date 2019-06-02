@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+    $(document).ready(function(){
+     $("#p").progressbar({
+       value:5
+     })
+
+    $("#btn1").click(function(){
+    var oldValue = $("#p").progressbar("getValue")
+    if(oldValue <= 80 ){
+      $("#p").progressbar("setValue",(oldValue+20))
+    }
+    })
+
+    $("#btn2").click(function(){
+      $("#p").progressbar({
+        onChange:function(nv,ov){
+          alert("新值为：" + nv +"；旧值为：" + ov);
+        }
+      })
+    })
+
+    
+
+			})
+
+
+      function autoDload(){
+        var t1=window.setInterval(refreshCount, 1000);
+        function refreshCount() {
+          var oldValue = $("#p").progressbar("getValue")
+          if(oldValue <= 90){
+          $("#p").progressbar("setValue",(oldValue+5))
+          }else{
+            window.clearInterval(t1);   
+          }
+         
+    }
+   
+    }
+    
+
+</script>
+
+  <body>
+    <p>HTML标签创建</p>
+    <div class="easyui-progressbar" data-options="value:80" style="width:400px;"></div> 
+    <br>
+    <p>JavaScript创建</p>
+     <div id="p" style="width:400px;"></div> 
+    <br>
+    <hr>
+    <input id="btn1" type="button" value="getValue/setValue获取当前值和设置一个新的值80">
+    <input id="btn2" type="button" value="onChange当值发生时控制台输出新值和旧值">
+    <input id="btn3" type="button" value="下载" onclick="autoDload();">
+
+  </body>
+  
+  </html>

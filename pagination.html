@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+    $(document).ready(function(){
+      $('#pp').pagination({ 
+				total:2000, 
+				pageSize:10 
+			}); 
+
+      $("#btn1").click(function(){
+				$("#pp").pagination({
+					onSelectPage:function(pageNumber, pageSize){
+						alert("选择了页面后触发的。当前页号为：" + pageNumber + "；页大小为：" + pageSize);
+					}
+				});
+			});
+        
+      $("#btn2").click(function(){
+				$("#pp").pagination({
+					onRefresh:function(pageNumber, pageSize){
+						alert("刷新后触发的。当前页号为：" + pageNumber + "；页大小为：" + pageSize);
+					}
+				});
+			});
+     
+      $("#btn3").click(function(){
+				$("#pp").pagination({
+					onChangePageSize:function(pageSize){
+						alert("改变页面大小后触发的。当前页大小为：" + pageSize);
+					}
+				});
+			});
+
+      $("#btn4").click(function(){
+				//选择第二页，页面索引从1开始
+				$('#pp').pagination('select', $("#btn44").val());
+			});
+     
+      $("#btn5").click(function(){
+				$('#pp').pagination('loading');
+			});
+      
+      $("#btn6").click(function(){
+				$('#pp').pagination('loaded');
+			});
+
+    });
+
+</script>
+
+  <body>
+      <p>HTML标签创建</p>
+      <div class="easyui-pagination" data-options="total:2000,pageSize:10" style="background:#efefef;border:1px solid #ccc;"></div> 
+     <br>
+     <p>JavaScript创建</p>
+    <div id="pp" style="background:#efefef;border:1px solid #ccc;"></div>
+    <br>
+    <hr>
+    <input id="btn1" type="button" value="onSelectPage选择一个新页面弹出页号和页大小">
+    <input id="btn2" type="button" value="onRefresh刷新之后弹出信息">
+    <input id="btn3" type="button" value="onChangePageSize在页面更改页面大小后弹出新的页大小">
+    <input id="btn44" type="text" >
+    <input id="btn4" type="button" value="跳转到">
+    <input id="btn5" type="button" value="loading方法设置分页条加载状态">
+    <input id="btn6" type="button" value="loaded方法设置分页条加载完成状态">
+   
+
+  </body>
+   
+  <span id='msg'></span>
+  </html>

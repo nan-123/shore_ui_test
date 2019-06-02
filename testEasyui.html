@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+ var index = 0;
+    var t = $('#tt');
+    var tabs = t.tabs('tabs');
+    setInterval(function(){
+        t.tabs('select', tabs[index].panel('options').title);
+        index++;
+        if (index >= tabs.length){
+            index = 0;
+        }
+    }, 3000);
+</script>
+
+  <body>
+      <div id="tt" class="easyui-tabs" style="width:330px;height:270px;">
+          <div title="Shirt1" style="padding:20px;">
+              <img src="C:\Users\Administrator\Desktop\timg.jpg">
+          </div>
+          <div title="Shirt2" style="padding:20px;">
+              <img src="C:\Users\Administrator\Desktop\timg (1).jpg">
+          </div>
+          <div title="Shirt3" style="padding:20px;">
+              <img src="C:\Users\Administrator\Desktop\timg (2).jpg">
+          </div>
+          <div title="Shirt4" style="padding:20px;">
+              <img src="C:\Users\Administrator\Desktop\timg (3).jpg">
+          </div>
+          <div title="Shirt5" style="padding:20px;">
+              <img src="C:\Users\Administrator\Desktop\timg (4).jpg">
+          </div>
+      </div>
+  </body>
+   
+  </html>

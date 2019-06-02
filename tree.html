@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+
+<style type="text/css">
+	body{
+		font-family: "Microsoft YaHei";
+	}
+	.titleCls {
+		color: white;
+		background-color: #0092E7;
+	}
+	</style>
+
+<script>
+
+    $(document).ready(function(){
+	
+			$('#tt').tree({    
+			    url:'tree_data1.json'
+			    
+			});  			
+	
+			})
+
+
+    
+
+</script>
+
+<body>
+	<p class="titleCls">HTML标签创建</p>
+	<ul class="easyui-tree">   
+	<li>   
+			<span>Folder</span>   
+			<ul>   
+					<li>   
+							<span>Sub Folder 1</span>   
+							<ul>   
+									<li>   
+											<span><a href="#">File 11</a></span>   
+									</li>   
+									<li>   
+											<span>File 12</span>   
+									</li>   
+									<li>   
+											<span>File 13</span>   
+									</li>   
+							</ul>   
+					</li>   
+					<li>   
+							<span>File 2</span>   
+					</li>   
+					<li>   
+							<span>File 3</span>   
+					</li>   
+			</ul>   
+	</li>   
+	<li>   
+			<span>File21</span>   
+	</li>   
+</ul>  
+
+	
+	<br>
+	<p class="titleCls">JavaScript创建</p>
+	<ul id="tt"></ul>
+	
+	<br>
+	<hr>
+
+	<input id="btn1" type="button" value="getRoot 获取树的根节点（可指定参数（dom类型）也可不指定）">
+
+</body>
+  
+  </html>

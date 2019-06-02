@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+    $(document).ready(function(){
+			$("#btn1").click(function(){
+				//设置为true时，选项卡的大小将铺满它所在的容器
+				$("#tt").tabs({fit:true});
+			});
+			
+			$("#btn2").click(function(){
+				$("#tt").tabs({
+					onSelect:function(title,index){
+						//index从0开始
+						alert("选项卡的标题为：" + title + "；索引号为：" + index);
+					}
+				});
+			});
+
+			$("#btn3").click(function(){
+				//onBeforeClose在关闭选项卡之前确认是否关闭
+				$("#tt").tabs({
+					onBeforeClose:function(title,index){
+						//如果返回true则关闭tab选项卡，否则不关闭
+						return confirm("你真的要关闭 " + title + " 的选项卡吗？");
+					}
+				});
+			});
+
+			$("#btn4").click(function(){
+				$("#tt").tabs("add",{
+					title: '新选项卡面板',
+					index:3, //作为第二个选项卡存在
+					closable:true,
+					selected: false
+				});
+			});
+
+			$("#btn5").click(function(){
+				//关闭第二个选项卡
+				$("#tt").tabs("close",1);
+			});
+
+			$("#btn6").click(function(){
+				//getSelected/getTabIndex获取当前选中选项卡的索引号
+				//找到当前选中的选项卡
+				var tab = $('#tt').tabs('getSelected');//easyui对象	
+				var index = $('#tt').tabs('getTabIndex',tab);
+				alert(index);
+
+			});
+
+			$("#btn7").click(function(){
+				//新增第二个选项卡
+				$("#tt").tabs("select",1);
+			}); 
+
+			$("#btn8").click(function(){
+				//add/exists新增选项卡，如果已经存在则打开
+				//1、判断选项卡是否存在
+				if($("#tt").tabs("exists","新增选项卡")){
+					//1.1、存在选项卡，则选择并打开
+					$("#tt").tabs("select","新增选项卡");
+				} else {
+					//1.2、不存在，则新增选项卡
+					$("#tt").tabs("add",{
+						title: '新增选项卡',
+						//index:1,//作为第二个选项卡存在
+						closable:true,
+						selected: true
+					});
+				}
+			});
+
+			$("#btn9").click(function(){
+				//禁用第二个选项卡
+				$("#tt").tabs("disableTab",1);
+			});
+
+			$("#btn10").click(function(){
+				//禁用第二个选项卡
+				$("#tt").tabs("enableTab",1);
+			});
+
+			})
+
+
+    
+
+</script>
+
+<body>
+	<div id="tt" class="easyui-tabs" style="width:500px;height:250px;">   
+    <div title="Tab1" style="padding:20px">   
+        tab1    
+    </div>   
+    <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px">   
+        tab2    
+    </div>   
+    <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding:20px">   
+        tab3    
+    </div>   
+</div>  
+
+<br>
+<hr>
+<input id="btn1" type="button" value="fit大小调整到父容器大小">
+<input id="btn2" type="button" value="onSelect选择选项卡后弹出选项卡标题">
+<input id="btn3" type="button" value="onBeforeClose在关闭选项卡之前确认是否关闭">
+<input id="btn4" type="button" value="add新增选项卡">
+<input id="btn5" type="button" value="close关闭第二个选项卡">
+<input id="btn6" type="button" value="getSelected/getTabIndex获取当前选中选项卡的索引号">
+<input id="btn7" type="button" value="select选择第二个选项卡">
+<input id="btn8" type="button" value="add/exists新增选项卡，如果已经存在则打开">
+<input id="btn9" type="button" value="disableTab禁用第二个选项卡">
+<input id="btn10" type="button" value="启用第二个选项卡">
+
+
+  </body>
+  
+  </html>

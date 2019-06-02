@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+    $(document).ready(function(){
+		$("#btn1").click(function(){
+				$("#cc").layout("panel","center").panel({href:"layout_content.html"});
+			});
+
+			$("#btn2").click(function(){
+				$("#cc").layout("collapse","east");
+			});
+
+			$("#btn3").click(function(){
+				$("#cc").layout("expand","east");
+			});
+
+			$("#btn4").click(function(){
+				$("#cc").layout("remove","east");
+			});
+			
+			$("#btn5").click(function(){
+				$("#cc").layout("add",{
+					title:"东区",
+					region:"east",
+					width:100
+				});
+			});
+			
+			})
+
+
+    
+
+</script>
+
+<body>
+	<div id="cc" class="easyui-layout" style="width:600px;height:400px;">   
+		<div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>   
+		<div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>   
+		<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>   
+		<div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>   
+		<div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>   
+	</div>   
+
+  </body>
+  <input id="btn1" type="button" value="panel()/href中间显示区域加载内容">
+  <input id="btn2" type="button" value="collapse收起右边（east）区域">
+  <input id="btn3" type="button" value="expand展开右边（east）区域">
+  <input id="btn4" type="button" value="remove删除右边（east）区域">
+  <input id="btn5" type="button" value="add新增右边（east）区域">
+  
+  </html>

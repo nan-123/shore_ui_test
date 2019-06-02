@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+    $(document).ready(function(){
+      $('#dd').tooltip({    
+				position: 'right',    
+				content: '<span style="color:#fff">This is the tooltip message.</span>',    
+				onShow: function(){        
+					$(this).tooltip('tip').css({            
+						backgroundColor: '#666',            
+						borderColor: '#666'        
+						});    
+				}
+			});
+			
+			$("#btn1").click(function(){
+				$('#dd').tooltip({
+					onHide:function(){
+						console.log('隐藏了提示内容');
+					}
+				});
+			});
+			
+			$("#btn2").click(function(){
+				$('#dd').tooltip("update","提示内容被改动了。");
+			});
+			$("#btn3").click(function(){
+				$('#dd').tooltip("destroy");
+			});
+			})
+
+
+    
+
+</script>
+
+<body>
+  <p>HTML标签创建</p>
+  <a href="#" title="这是提示信息." class="easyui-tooltip">Hover me</a>
+  <br>
+  <p>JavaScript创建</p>
+  <a id="dd" href="javascript:void(0)">Click here</a>
+  <br>
+  <hr>
+  <input id="btn1" type="button" value="onHide隐藏时控制台输出信息">
+	<input id="btn2" type="button" value="update更新提示框的内容">
+	<input id="btn3" type="button" value="destroy销毁提示框">
+
+
+  </body>
+  
+  </html>

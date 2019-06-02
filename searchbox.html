@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+function qq(value,name){ 
+			alert(value+":"+name) 
+		} 
+
+    $(document).ready(function(){
+      $('#ss').searchbox({ 
+				searcher:function(value,name){ 
+				alert(value + "," + name) 
+				}, 
+				width:300,
+				menu:'#mm', 
+				prompt:'请输入值哦' 
+			})
+
+      //  $("#btn1").click(function(){
+      //    alert($("#ss").val())
+         
+      //  })
+        $("#btn1").click(function(){
+				alert($("#ss").searchbox("getValue"));
+      })
+
+      $("#btn2").click(function(){
+				$("#ss").searchbox("setValue","itcast");
+			});
+
+      $("#btn3").click(function(){
+				alert($("#ss").searchbox("getName"));
+			});
+
+      $("#btn4").click(function(){
+				$("#ss").searchbox("selectName","sports");
+			});
+
+      $("#btn5").click(function(){
+				$("#ss").searchbox("destroy");
+			});
+
+      $("#btn6").click(function(){
+				$("#ss").searchbox("disable");
+			});
+
+      $("#btn7").click(function(){
+				$("#ss").searchbox("enable");
+			});
+
+      $("#btn8").click(function(){
+				$("#ss").searchbox("clear");
+			});
+
+      $("#btn9").click(function(){
+				$("#ss").searchbox("reset");
+			});
+
+			})
+
+</script>
+
+  <body>
+    <p>HTML标签创建</p>
+     <input class="easyui-searchbox" style="width:300px" 
+		data-options="searcher:qq,prompt:'Please Input Value',menu:'#mm2'"></input> 
+		<div id="mm2" style="width:120px"> 
+		<div data-options="name:'all',iconCls:'icon-ok'">All News</div> 
+		<div data-options="name:'sports',iconCls:'icon-add'">Sports News</div> 
+		</div>    
+    <br>
+    <p>JavaScript创建</p>
+     <input id="ss" value="123"></input> 
+	<div id="mm" style="width:120px"> 
+	<div data-options="name:'all',iconCls:'icon-ok'">All News</div> 
+	<div data-options="name:'sports'">Sports News</div> 
+	</div>
+    
+    <br>
+    <hr>
+    <input id="btn1" type="button" value="getValue获取搜索值">
+    <input id="btn2" type="button" value="setValue设置搜索值">
+    <input id="btn3" type="button" value="getName获取当前搜索类型名称">
+    <input id="btn4" type="button" value="selectName选择当前搜索类型名称为sport">
+    <input id="btn5" type="button" value="destroy销毁搜索框">
+    <input id="btn6" type="button" value="disable禁用搜索框">
+    <input id="btn7" type="button" value="enable启用搜索框">
+    <input id="btn8" type="button" value="clear清空搜索值">
+    <input id="btn9" type="button" value="reset重置搜索框">
+  
+
+  </body>
+   
+  <span id='msg'></span>
+  </html>

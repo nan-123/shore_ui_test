@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>easy_ui_test</title>
+  <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/default/easyui.css"/>
+   <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.7.6/themes/icon.css"/>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="static/jquery-easyui-1.7.6/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<script>
+
+    $(document).ready(function(){
+			$("#btn1").click(function(){
+				$("#mm").menu("show",{left:50,top:50});
+			});
+
+			$("#btn2").click(function(){
+				$("#mm").menu({
+					onClick:function(item){
+						alert("点击了：" + item.text);
+					}
+				});
+			});
+
+			})
+
+
+    
+
+</script>
+
+<body>
+	<div id="mm" class="easyui-menu" style="width:120px;">   
+		<div>New</div>   
+		<div>   
+				<span>Open</span>   
+				<div style="width:150px;">   
+						<div><b>Word</b></div>   
+						<div>Excel</div>   
+						<div>PowerPoint</div>   
+				</div>   
+		</div>   
+		<div data-options="iconCls:'icon-save'">Save</div>   
+		<div class="menu-sep"></div>   
+		<div>Exit</div>   
+</div> 
+	
+	<br>
+	<hr>
+	<input id="btn1" type="button" value="其他">
+	<input id="btn2" type="button" value="onClick点击菜单后输出点击的菜单内容">
+	</body>
+  
+  </html>
